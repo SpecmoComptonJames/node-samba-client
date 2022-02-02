@@ -126,6 +126,12 @@ class SambaClient {
     if (Array.isArray(smbCommandArgs)) {
       cleanedSmbArgs = getCleanedSmbClientArgs(smbCommandArgs);
     }
+
+    //spc deal with root not listing correctly.
+    if (cleanedSmbArgs === '"."') {
+      cleanedSmbArgs = '';
+    }
+
     args.push("-c", `${smbCommand} ${cleanedSmbArgs}`, this.address);
 
     if (this.password) {
